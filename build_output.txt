@@ -1,0 +1,116 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Checking the license for package Android SDK Platform 35 in C:\Users\vihan_0v4rt5t\AppData\Local\Android\Sdk\licenses
+License for package Android SDK Platform 35 accepted.
+Preparing "Install Android SDK Platform 35 (revision 2)".
+"Install Android SDK Platform 35 (revision 2)" ready.
+Installing Android SDK Platform 35 in C:\Users\vihan_0v4rt5t\AppData\Local\Android\Sdk\platforms\android-35
+"Install Android SDK Platform 35 (revision 2)" complete.
+"Install Android SDK Platform 35 (revision 2)" finished.
+> Task :FtcRobotController:preBuild UP-TO-DATE
+> Task :FtcRobotController:preDebugBuild UP-TO-DATE
+> Task :FtcRobotController:mergeDebugJniLibFolders UP-TO-DATE
+> Task :FtcRobotController:mergeDebugNativeLibs NO-SOURCE
+> Task :FtcRobotController:stripDebugDebugSymbols NO-SOURCE
+> Task :FtcRobotController:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :FtcRobotController:generateDebugBuildConfig
+> Task :FtcRobotController:generateDebugResValues UP-TO-DATE
+> Task :FtcRobotController:generateDebugResources UP-TO-DATE
+> Task :FtcRobotController:packageDebugResources UP-TO-DATE
+> Task :FtcRobotController:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :FtcRobotController:javaPreCompileDebug UP-TO-DATE
+> Task :FtcRobotController:mergeDebugShaders UP-TO-DATE
+> Task :FtcRobotController:compileDebugShaders NO-SOURCE
+> Task :FtcRobotController:generateDebugAssets UP-TO-DATE
+> Task :FtcRobotController:packageDebugAssets UP-TO-DATE
+> Task :FtcRobotController:prepareDebugArtProfile UP-TO-DATE
+> Task :FtcRobotController:prepareLintJarForPublish UP-TO-DATE
+> Task :FtcRobotController:processDebugManifest UP-TO-DATE
+> Task :FtcRobotController:processDebugJavaRes NO-SOURCE
+> Task :FtcRobotController:mergeDebugJavaResource UP-TO-DATE
+> Task :FtcRobotController:writeDebugAarMetadata UP-TO-DATE
+> Task :TeamCode:preBuild UP-TO-DATE
+> Task :TeamCode:preDebugBuild UP-TO-DATE
+> Task :TeamCode:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :TeamCode:javaPreCompileDebug UP-TO-DATE
+> Task :FtcRobotController:compileDebugLibraryResources UP-TO-DATE
+> Task :FtcRobotController:parseDebugLocalResources
+> Task :TeamCode:checkDebugAarMetadata
+> Task :TeamCode:generateDebugResValues UP-TO-DATE
+> Task :TeamCode:mapDebugSourceSetPaths UP-TO-DATE
+> Task :TeamCode:generateDebugResources UP-TO-DATE
+> Task :TeamCode:mergeDebugResources UP-TO-DATE
+> Task :TeamCode:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :FtcRobotController:extractDeepLinksDebug UP-TO-DATE
+> Task :TeamCode:extractDeepLinksDebug UP-TO-DATE
+> Task :FtcRobotController:generateDebugRFile
+> Task :TeamCode:processDebugMainManifest
+> Task :FtcRobotController:extractDebugAnnotations
+
+> Task :FtcRobotController:compileDebugJavaWithJavac
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: C:\Users\vihan_0v4rt5t\AndroidStudioProjects\FtcDecode\FtcRobotController\src\main\java\org\firstinspires\ftc\robotcontroller\internal\FtcRobotControllerActivity.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+3 warnings
+
+> Task :FtcRobotController:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :FtcRobotController:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :FtcRobotController:syncDebugLibJars
+> Task :FtcRobotController:bundleDebugAar
+> Task :FtcRobotController:assembleDebug
+> Task :FtcRobotController:bundleLibCompileToJarDebug
+> Task :TeamCode:processDebugManifest
+> Task :TeamCode:mergeDebugShaders UP-TO-DATE
+> Task :TeamCode:compileDebugShaders NO-SOURCE
+> Task :TeamCode:generateDebugAssets UP-TO-DATE
+> Task :TeamCode:mergeDebugAssets UP-TO-DATE
+> Task :TeamCode:compressDebugAssets UP-TO-DATE
+> Task :TeamCode:processDebugJavaRes NO-SOURCE
+> Task :TeamCode:mergeDebugJavaResource UP-TO-DATE
+> Task :TeamCode:checkDebugDuplicateClasses UP-TO-DATE
+> Task :TeamCode:desugarDebugFileDependencies UP-TO-DATE
+> Task :TeamCode:mergeExtDexDebug UP-TO-DATE
+> Task :FtcRobotController:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :TeamCode:mergeDebugJniLibFolders UP-TO-DATE
+> Task :FtcRobotController:bundleLibRuntimeToDirDebug
+> Task :TeamCode:mergeDebugNativeLibs UP-TO-DATE
+> Task :TeamCode:processDebugManifestForPackage
+> Task :TeamCode:stripDebugDebugSymbols UP-TO-DATE
+> Task :TeamCode:validateSigningDebug UP-TO-DATE
+> Task :TeamCode:writeDebugAppMetadata UP-TO-DATE
+> Task :TeamCode:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :TeamCode:mergeLibDexDebug
+> Task :TeamCode:processDebugResources
+
+> Task :TeamCode:compileDebugJavaWithJavac
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: C:\Users\vihan_0v4rt5t\AndroidStudioProjects\FtcDecode\TeamCode\src\main\java\org\firstinspires\ftc\teamcode\trclib\vision\TrcVisionTask.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+3 warnings
+
+> Task :TeamCode:dexBuilderDebug
+> Task :TeamCode:mergeProjectDexDebug
+> Task :TeamCode:packageDebug
+> Task :TeamCode:createDebugApkListingFileRedirect
+> Task :TeamCode:assembleDebug
+
+BUILD SUCCESSFUL in 40s
+59 actionable tasks: 20 executed, 39 up-to-date
