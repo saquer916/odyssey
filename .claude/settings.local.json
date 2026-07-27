@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew :odyssey-core:test --console=plain)",
+      "Bash(update-alternatives --list java)",
+      "Read(//usr/lib/jvm/**)",
+      "Bash(java -version)",
+      "Bash(JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./gradlew :odyssey-core:test --console=plain])",
+      "Bash(apt list *)",
+      "Bash(apt-cache search *)",
+      "Bash(sudo apt-get install -y openjdk-17-jdk-headless)",
+      "Bash(JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./gradlew :odyssey-core:test --console=plain)",
+      "Read(//home/saquer/.gradle/caches/**)",
+      "Bash(git add *)"
+    ]
+  }
+}
