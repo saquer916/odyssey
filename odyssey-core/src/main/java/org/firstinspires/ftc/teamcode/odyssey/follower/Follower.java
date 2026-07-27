@@ -6,11 +6,8 @@ import org.firstinspires.ftc.teamcode.odyssey.control.PIDController;
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.localization.Localizer;
-import org.firstinspires.ftc.teamcode.odyssey.localization.SimulatedLocalizer;
-import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
 import org.firstinspires.ftc.teamcode.odyssey.path.Path;
 import org.firstinspires.ftc.teamcode.odyssey.path.VelocityProfile;
-import org.firstinspires.ftc.teamcode.odyssey.utils.MathUtils;
 
 public class Follower {
 
