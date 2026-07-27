@@ -6,32 +6,26 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegrator;
 import org.apache.commons.math3.analysis.solvers.BrentSolver;
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.HeadingInterpolator;
 
 public class BezierCurve {
     private final Vector2d p0;
     private final Vector2d p1;
     private final Vector2d p2;
     private final Vector2d p3;
-
-    private final double startHeading;
-    private final double endHeading;
-
     private final Vector2d a;
     private final Vector2d b;
     private final Vector2d c;
     private final Vector2d d;
 
-    public BezierCurve(Vector2d p0, Vector2d p1, Vector2d p2, Vector2d p3) {
-        this(p0, p1, p2, p3, 0.0, 0.0);
-    }
+    private HeadingInterpolator headingInterpolator;
 
-    public BezierCurve(Vector2d p0, Vector2d p1, Vector2d p2, Vector2d p3, double startHeading, double endHeading) {
+    public BezierCurve(Vector2d p0, Vector2d p1, Vector2d p2, Vector2d p3, HeadingInterpolator headingInterpolator) {
         this.p0 = p0;
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
-        this.startHeading = startHeading;
-        this.endHeading = endHeading;
+        this.headingInterpolator = headingInterpolator;
         this.a = p0.scale(-1).add(p1.scale(3)).subtract(p2.scale(3)).add(p3);
         this.b = p0.scale(3).subtract(p1.scale(6)).add(p2.scale(3));
         this.c = p0.scale(-3).add(p1.scale(3));
@@ -81,8 +75,7 @@ public class BezierCurve {
     }
 
     public double getHeadingAtT(double t) {
-        double delta = normalizeAngle(endHeading - startHeading);
-        return normalizeAngle(startHeading + delta * t);
+        return headingInterpolator.getHeading(t, this);
     }
 
     public double getClosestT(Vector2d pose, double coarseStep, double fineStep) {
