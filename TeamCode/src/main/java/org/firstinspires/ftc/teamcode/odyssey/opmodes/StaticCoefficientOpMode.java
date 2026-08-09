@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.odyssey.localization.GoBildaPinpointDriver;
-@TeleOp
+@TeleOp(name = "static coeff op mode")
 public class StaticCoefficientOpMode extends OpMode {
     private DcMotorEx frontLeft;
     private DcMotorEx frontRight;
@@ -18,7 +18,7 @@ public class StaticCoefficientOpMode extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private VoltageSensor voltageSensor;
     private GoBildaPinpointDriver localizer;
-    private double power = 0.0;
+    private double power = 0.1;
     private double finalVelocity = 0.0;
 
 
@@ -33,10 +33,10 @@ public class StaticCoefficientOpMode extends OpMode {
 
     @Override
     public void init() {
-        frontLeft = hardwareMap.get(DcMotorEx.class, "leftfront");
-        frontRight = hardwareMap.get(DcMotorEx.class, "rightfront");
-        backLeft = hardwareMap.get(DcMotorEx.class, "leftback");
-        backRight = hardwareMap.get(DcMotorEx.class, "rightback");
+        frontLeft = hardwareMap.get(DcMotorEx.class, "leftFront");
+        frontRight = hardwareMap.get(DcMotorEx.class, "rightFront");
+        backLeft = hardwareMap.get(DcMotorEx.class, "leftBack");
+        backRight = hardwareMap.get(DcMotorEx.class, "rightBack");
 
         localizer = hardwareMap.get(GoBildaPinpointDriver.class, "localizer");
         localizer.resetPosAndIMU();
@@ -48,10 +48,10 @@ public class StaticCoefficientOpMode extends OpMode {
         backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
-        frontRight.setDirection(DcMotorEx.Direction.REVERSE);
-        backLeft.setDirection(DcMotorEx.Direction.FORWARD);
-        backRight.setDirection(DcMotorEx.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRight.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        backRight.setDirection(DcMotorEx.Direction.FORWARD);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -66,6 +66,7 @@ public class StaticCoefficientOpMode extends OpMode {
             case START_MOVE:
                 frontLeft.setPower(power);
                 frontRight.setPower(power);
+
                 backLeft.setPower(power);
                 backRight.setPower(power);
 
@@ -75,13 +76,13 @@ public class StaticCoefficientOpMode extends OpMode {
                 break;
 
             case MOVING:
-                if (runtime.milliseconds() >= 2000) {
+                if (runtime.milliseconds() >= 1750) {
                     finalVelocity = localizer.getVelX(DistanceUnit.MM);
 
-                    frontLeft.setPower(0.0);
-                    frontRight.setPower(0.0);
-                    backLeft.setPower(0.0);
-                    backRight.setPower(0.0);
+                    frontLeft.setPower(0);
+                    frontRight.setPower(0);
+                    backLeft.setPower(0);
+                    backRight.setPower(0);
 
                     telemetry.log().add("power: %.4f | velo: %.4f", power, finalVelocity);
 
@@ -95,16 +96,11 @@ public class StaticCoefficientOpMode extends OpMode {
                 break;
 
             case RESTING:
-                if (runtime.milliseconds() >= 2000) {
+                if (runtime.milliseconds() >= 1750) {
                     power += 0.1;
-
-                    if (power >= 0.41) {
-                        currentState = motorState.DONE;
-                    }
-                    else {
-                        currentState = motorState.START_MOVE;
-                    }
+                    currentState = (power > 0.31) ? motorState.DONE : motorState.START_MOVE;
                 }
+                break;
 
             case DONE:
                 break;
