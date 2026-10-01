@@ -42,12 +42,15 @@ public class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Right side is mirror-mounted on a standard symmetric FTC chassis, so it spins the
-        // opposite way for the same positive power. REVERSE cancels that so all-four-positive
-        // drives forward. VERIFY ON THE BENCH (handoff §9 step 8) — if the robot spins in place
-        // instead of driving straight, this assumption is backwards for this chassis.
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        // Must match StaticCoefficientOpMode / kAOpMode: kS, kV and kA were measured with the LEFT
+        // side reversed and all-four-positive power reading +X on the Pinpoint. Reversing the right
+        // side instead flips every wheel, so the follower's corrections push the robot away from
+        // the path. All four are set explicitly so nothing depends on a previous OpMode's setting.
+        // Check with DriveSignCheck after changing anything here.
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void drive(DriveSignal signal) {
