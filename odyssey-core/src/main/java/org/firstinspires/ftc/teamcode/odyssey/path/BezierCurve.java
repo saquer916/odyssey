@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.odyssey.path;
 
 import static org.firstinspires.ftc.teamcode.odyssey.utils.MathUtils.normalizeAngle;
+import static org.firstinspires.ftc.teamcode.odyssey.utils.MathUtils.precisionEPS;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegrator;
@@ -52,8 +53,27 @@ public class BezierCurve {
     }
 
     public double getTangentAngle(double t) { // only use if dont need vector and only angle - you can just use getAngleFromCur on the known vector for more efficiency.
+        return getTangentDirection(t).getAngleFromCur();
+    }
+
+    // Unit direction of travel at t. getTangentVector(t) is exactly zero at an endpoint whose
+    // control point is doubled (p0 == p1 or p2 == p3, a common way to write a straight line), and
+    // normalizing that gives (0, 0) instead of a direction. The curve still leaves / arrives along
+    // the first non-zero chord below, which is the limit of B'(t) / |B'(t)| at that endpoint.
+    public Vector2d getTangentDirection(double t) {
         Vector2d tangentVec = getTangentVector(t);
-        return tangentVec.getAngleFromCur();
+        if (tangentVec.getMagnitude() > precisionEPS) {
+            return tangentVec.normalize();
+        }
+        Vector2d[] chords = (t < 0.5)
+                ? new Vector2d[] {p1.subtract(p0), p2.subtract(p0), p3.subtract(p0)}
+                : new Vector2d[] {p3.subtract(p2), p3.subtract(p1), p3.subtract(p0)};
+        for (Vector2d chord : chords) {
+            if (chord.getMagnitude() > precisionEPS) {
+                return chord.normalize();
+            }
+        }
+        return new Vector2d(0, 0);
     }
 
     public double getLength(double b) {
@@ -129,12 +149,15 @@ public class BezierCurve {
     }
     public double getCurvature(double t) {
         Vector2d first = getTangentVector(t);
+        // |B'| == 0 at a doubled control point: the formula is 0/0 (NaN), treat the point as straight.
+        if (first.getMagnitude() < precisionEPS) return 0;
         Vector2d second = getSecondDerivative(t);
         return Math.abs(first.crossProduct(second)) / Math.pow(first.getMagnitude(), 3);
     }
 
     public Vector2d getCentripetalVector(double t) {
         Vector2d v = getTangentVector(t);
+        if (v.getMagnitude() < precisionEPS) return new Vector2d(0, 0); // see getCurvature
         Vector2d e = getSecondDerivative(t);
         return e.subtract(v.scale(e.dotProduct(v)/(v.getMagnitude()*v.getMagnitude())));
     }

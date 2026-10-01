@@ -77,20 +77,21 @@ public class Path {
         return curves[curves.length - 1].getCurvature(1);
     }
 
+    // Unit vector. Uses getTangentDirection so doubled control points still give a direction.
     public Vector2d getTangentFromPathDistance(double dist) {
-        if (dist <= 0) return curves[0].getTangentVector(0);
+        if (dist <= 0) return curves[0].getTangentDirection(0);
         for (int i = 0; i < curves.length; i++) {
             BezierCurve curve = curves[i];
             double len = curveLengths[i];
             if (dist <= len) {
                 double t = curve.getTAtDistance(dist);
-                return curve.getTangentVector(t);
+                return curve.getTangentDirection(t);
             }
             else {
                 dist -= len;
             }
         }
-        return curves[curves.length - 1].getTangentVector(1);
+        return curves[curves.length - 1].getTangentDirection(1);
     }
 
     public Vector2d getCentripetalVectorPath(double dist) {
