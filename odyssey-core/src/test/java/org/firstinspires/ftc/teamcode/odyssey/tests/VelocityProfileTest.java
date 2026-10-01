@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.ConstantInterpolator;
 import org.firstinspires.ftc.teamcode.odyssey.path.Path;
 import org.firstinspires.ftc.teamcode.odyssey.path.VelocityProfile;
 import org.junit.Test;
@@ -23,14 +24,14 @@ public class VelocityProfileTest {
     private Path straightPath() {
         return new Path(new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1000, 0),
-                new Vector2d(2000, 0), new Vector2d(3000, 0)));
+                new Vector2d(2000, 0), new Vector2d(3000, 0), new ConstantInterpolator(0)));
     }
 
     
     private Path curvyPath() {
         return new Path(new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(0, 600),
-                new Vector2d(1200, 600), new Vector2d(1200, 0)));
+                new Vector2d(1200, 600), new Vector2d(1200, 0), new ConstantInterpolator(0)));
     }
 
     private VelocityProfile profileOf(Path p) {

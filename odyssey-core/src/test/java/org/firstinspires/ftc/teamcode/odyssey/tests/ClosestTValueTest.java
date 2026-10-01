@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.ConstantInterpolator;
 import org.junit.Test;
 
 public class ClosestTValueTest {
@@ -15,14 +16,14 @@ public class ClosestTValueTest {
     private BezierCurve arch() {
         return new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(0, 3),
-                new Vector2d(6, 3), new Vector2d(6, 0));
+                new Vector2d(6, 3), new Vector2d(6, 0), new ConstantInterpolator(0));
     }
 
     
     private BezierCurve straightLine() {
         return new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1, 0),
-                new Vector2d(2, 0), new Vector2d(3, 0));
+                new Vector2d(2, 0), new Vector2d(3, 0), new ConstantInterpolator(0));
     }
 
     

@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.odysseygui.FieldCoordinates.fieldY_
 
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.ConstantInterpolator;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -103,7 +104,7 @@ public class Main extends Application {
         gc.strokeLine(fieldX_MM_TO_PX(p1.getX()), fieldY_MM_TO_PX(p1.getY()), fieldX_MM_TO_PX(p2.getX()), fieldY_MM_TO_PX(p2.getY()));
         gc.strokeLine(fieldX_MM_TO_PX(p2.getX()), fieldY_MM_TO_PX(p2.getY()), fieldX_MM_TO_PX(p3.getX()), fieldY_MM_TO_PX(p3.getY()));
 
-        BezierCurve curve = new BezierCurve(p0, p1, p2, p3);
+        BezierCurve curve = new BezierCurve(p0, p1, p2, p3, new ConstantInterpolator(0));
 
         gc.setStroke(Color.YELLOW);
         gc.setLineWidth(3);
