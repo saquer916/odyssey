@@ -30,7 +30,11 @@ public class Follower {
         this.pidHeading = pidHeading;
         this.totalLength = path.getTotalLength();
         this.minDriveSpeed = minDriveSpeed;
-        this.floorCutoff = floorCutoff;
+        // The profile starts at v = 0, so a robot sitting on the path start is commanded 0 and never
+        // leaves; the floor is what gets it moving. On a path shorter than 2 * floorCutoff the cutoff
+        // alone would cover the start too (FirstTest: 100 mm path, 500 mm cutoff) and the floor never
+        // applies, so cap it at half the path.
+        this.floorCutoff = Math.min(floorCutoff, totalLength / 2);
     }
 
     public DriveSignal update(double currentTime) {

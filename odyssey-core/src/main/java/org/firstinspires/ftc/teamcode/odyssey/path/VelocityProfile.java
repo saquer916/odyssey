@@ -71,8 +71,11 @@ public class VelocityProfile {
         if (distances == null || distances.length == 0) return 0;
 
         int length = distances.length;
-        if (distance <= 0) return 0;
-        if (distance > distances[length - 1]) return 0;
+        // distance 0 is where the robot starts from rest: it needs the launch accel here, not 0.
+        if (distance < 0) return 0;
+        // At / past the end the robot should be stopped. getDistanceOnPath clamps an overshoot to
+        // exactly the total length, so without >= the last segment's -maxBrake keeps shoving it back.
+        if (distance >= distances[length - 1]) return 0;
 
         int lowIdx = (int) Math.floor(distance / step);
 
