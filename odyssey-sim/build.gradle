@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+// The OpMode .java file you pass is compiled at run time against this module's classpath: the FTC
+// SDK stand-ins in src/main/java, odyssey-core, and TeamCode's odyssey classes (MecanumDrive,
+// PinpointLocalizer, ...). Those are copied in here, minus TeamCode's GoBildaPinpointDriver (the
+// simulated one replaces it) and minus the OpModes themselves (they come in as files). Copying
+// rather than sharing the folder keeps Android Studio from seeing one source root in two modules.
+def teamCodeSources = tasks.register('copyTeamCodeSources', Sync) {
+    from('../TeamCode/src/main/java') {
+        include 'org/firstinspires/ftc/teamcode/odyssey/**'
+        exclude 'org/firstinspires/ftc/teamcode/odyssey/localization/GoBildaPinpointDriver.java'
+        exclude 'org/firstinspires/ftc/teamcode/odyssey/opmodes/**'
+    }
+    into layout.buildDirectory.dir('teamcode-src')
+}
+sourceSets.main.java.srcDir(teamCodeSources)
+
+dependencies {
+    implementation project(':odyssey-core')
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'org.firstinspires.ftc.teamcode.odysseysim.SimMain'
+}
+
+tasks.named('run') {
+    // Paths in --args are relative to the repo root, and reports land in odyssey-sim/out/.
+    workingDir = rootProject.projectDir
+}
