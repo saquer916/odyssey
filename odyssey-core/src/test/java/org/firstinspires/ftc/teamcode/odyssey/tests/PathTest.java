@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.LinearInterpolator;
 import org.firstinspires.ftc.teamcode.odyssey.path.Path;
 import org.junit.Test;
 
@@ -15,14 +16,14 @@ public class PathTest {
         return new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1, 0),
                 new Vector2d(2, 0), new Vector2d(3, 0),
-                0.0, Math.PI / 2);
+                new LinearInterpolator(0.0, Math.PI / 2));
     }
 
     private BezierCurve wraparound() {
         return new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1, 0),
                 new Vector2d(2, 0), new Vector2d(3, 0),
-                Math.toRadians(170), Math.toRadians(-170));
+                new LinearInterpolator(Math.toRadians(170), Math.toRadians(-170)));
     }
 
 
@@ -61,11 +62,11 @@ public class PathTest {
         BezierCurve a = new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1, 0),
                 new Vector2d(2, 0), new Vector2d(3, 0),
-                0.0, 0.0);
+                new LinearInterpolator(0.0, 0.0));
         BezierCurve b = new BezierCurve(
                 new Vector2d(3, 0), new Vector2d(4, 0),
                 new Vector2d(5, 0), new Vector2d(6, 0),
-                Math.PI / 2, Math.PI / 2);
+                new LinearInterpolator(Math.PI / 2, Math.PI / 2));
         Path path = new Path(a, b);
 
         double justBeforeSeam = path.getPointOnPath(2.999).getHeading();
@@ -79,11 +80,11 @@ public class PathTest {
         BezierCurve a = new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(1, 0),
                 new Vector2d(2, 0), new Vector2d(3, 0),
-                0.0, Math.PI / 4);
+                new LinearInterpolator(0.0, Math.PI / 4));
         BezierCurve b = new BezierCurve(
                 new Vector2d(3, 0), new Vector2d(4, 0),
                 new Vector2d(5, 0), new Vector2d(6, 0),
-                Math.PI / 4, Math.PI / 2);
+                new LinearInterpolator(Math.PI / 4, Math.PI / 2));
         Path path = new Path(a, b);
 
         double atSeam = path.getPointOnPath(3.0).getHeading();

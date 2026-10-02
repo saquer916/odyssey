@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.odyssey.tests;
 
 import org.firstinspires.ftc.teamcode.odyssey.geometry.Vector2d;
 import org.firstinspires.ftc.teamcode.odyssey.path.BezierCurve;
+import org.firstinspires.ftc.teamcode.odyssey.path.heading.ConstantInterpolator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -12,7 +13,7 @@ public class BezierTangentTest {
     private BezierCurve sample() {
         return new BezierCurve(
                 new Vector2d(0, 0), new Vector2d(0, 3),
-                new Vector2d(6, 3), new Vector2d(6, 0)
+                new Vector2d(6, 3), new Vector2d(6, 0), new ConstantInterpolator(0)
         );
     }
 
