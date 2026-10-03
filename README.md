@@ -163,8 +163,9 @@ Known limits, roughly in order of importance:
 
 ## Contributing
 
-Help is very welcome, especially with the roadmap. See [CONTRIBUTING.md](.github/CONTRIBUTING.md).
-Pull requests go into the `test` branch.
+Help is very welcome, especially with the roadmap, and beginners are welcome too. See
+[CONTRIBUTING.md](.github/CONTRIBUTING.md) for how it works, step by step. Pull requests go into the
+`test` branch.
 
 ## Credits and licenses
 
@@ -176,5 +177,5 @@ Pull requests go into the `test` branch.
   file.
 - `PIDController` is adapted from Charles Grassin's MIT-licensed PID controller. Its original
   copyright notice still needs to be added back to the file.
-- Odyssey's own code doesn't have a license yet. Until it does, others can read it but can't
-  legally reuse it.
+- **Odyssey's own code** (`odyssey-core/`, `odyssey-sim/`, `odyssey-gui/` and `TeamCode/.../odyssey/`)
+  is under the MIT License in [LICENSE-ODYSSEY](LICENSE-ODYSSEY).

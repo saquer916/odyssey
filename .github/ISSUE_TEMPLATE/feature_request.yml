@@ -1,0 +1,27 @@
+name: Feature request
+description: An idea for something Odyssey should do.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem or goal, e.g. "run an intake halfway along a path".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could Odyssey help?
+      description: What you'd like to see. Rough ideas are fine.
+  - type: textarea
+    id: elsewhere
+    attributes:
+      label: How do other libraries handle it?
+      description: If Pedro Pathing, Road Runner etc. do this, how? Links help.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Want to work on it?
+      options:
+        - label: I'd like to try implementing this (with help if needed)
