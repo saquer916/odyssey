@@ -39,8 +39,9 @@ If you've never made a pull request, this is the whole process.
 6. **Push** the branch to your fork and open a **pull request into `test`**.
    On the "Open a pull request" page, set **base: `test`**. GitHub suggests `main` by default, so
    change it.
-7. **Review.** The simulator runs automatically on your pull request. A maintainer reads the change
-   and may ask questions or for changes. That's normal and not a rejection: push more commits to the
+7. **Review.** The tests and the simulator run automatically on your pull request. On your first
+   one, a maintainer has to click *Approve and run* first; GitHub requires that for new contributors.
+   A maintainer reads the change and may ask questions or for changes. That's normal and not a rejection: push more commits to the
    same branch and the pull request updates.
 8. **Merge.** Once it's approved, a maintainer merges it into `test`. After it's been tried on a
    robot, `test` is merged into `main`.
@@ -67,8 +68,9 @@ The last command simulates an OpMode and writes `odyssey-sim/out/SamplePath/repo
 how closely the robot followed the path. If your change affects how the robot drives, say in your
 pull request how the simulator results changed, before vs. after.
 
-No computer set up for this? Push your branch, and the **Actions** tab on your fork runs the same
-checks.
+No computer set up for this? Open your pull request; the check on it runs the same tests and
+simulations, and the run's summary page shows the results. To also run them on every push to your
+fork, turn on Actions in the fork first (its **Actions** tab asks you to).
 
 **If you test on a real robot:** start with the robot on blocks or with lots of room, keep a hand
 on the stop button, and run `Drive Sign Check` before any path.
