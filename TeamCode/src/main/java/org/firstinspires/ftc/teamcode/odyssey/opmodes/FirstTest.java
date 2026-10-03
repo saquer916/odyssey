@@ -29,17 +29,27 @@ public class FirstTest extends OpMode {
     private static final double lX = 140.25;
     private static final double lY = 221.75;
 
-    private static final double TRANSLATIONAL_kP = 0.25;
-    private static final double TRANSLATIONAL_kI = 0.0;
-    private static final double TRANSLATIONAL_kD = 0.001;
+    // Tuned in odyssey-sim on several paths, with a tired/heavy and a fresh/light robot, noisy
+    // odometry and a ~30 ms loop. Measured constants above aren't tuned.
+    private static final double TRANSLATIONAL_kP = 30;
+    private static final double TRANSLATIONAL_kI = 8.1;
+    private static final double TRANSLATIONAL_kD = 2.0;
     private static final double TRANSLATIONAL_LIMIT = 1900;
 
-    private static final double HEADING_kP = 2.0;
+    private static final double HEADING_kP = 13.0;
     private static final double HEADING_kI = 0.0;
-    private static final double HEADING_kD = 0.001;
-    private static final double HEADING_LIMIT = 3.0;
-    private static final double MIN_DRIVE_SPEED = 110;
-    private static final double FLOOR_CUTOFF = 500;
+    private static final double HEADING_kD = 0.066;
+    private static final double HEADING_LIMIT = 1.32;
+
+    // MAX_VELOCITY leaves headroom below the motors' ~2250 mm/s so corrections don't saturate.
+    private static final double MAX_VELOCITY = 890;
+    private static final double MAX_ACCEL = 3160;
+    private static final double MAX_BRAKE = 560;
+    private static final double MAX_CENTRIPETAL = 2275;
+    // Keep MIN_DRIVE_SPEED above (kA / kV) * MAX_BRAKE (~0.35 * MAX_BRAKE): below that, the braking
+    // feedforward cancels the floor near the end and the robot can stall short of it.
+    private static final double MIN_DRIVE_SPEED = 255;
+    private static final double FLOOR_CUTOFF = 0;
 
     private DcMotorEx leftFront;
     private DcMotorEx rightFront;
@@ -78,7 +88,7 @@ public class FirstTest extends OpMode {
                 )
         );
 
-        profile = new VelocityProfile(path, 1900, 3000, 3000, 2500, 1.25);
+        profile = new VelocityProfile(path, MAX_VELOCITY, MAX_ACCEL, MAX_BRAKE, MAX_CENTRIPETAL, 1.25);
 
         pidTranslational = new PIDController(0, TRANSLATIONAL_kP, TRANSLATIONAL_kI, TRANSLATIONAL_kD);
         pidTranslational.setOutputLimits(-TRANSLATIONAL_LIMIT, TRANSLATIONAL_LIMIT);
