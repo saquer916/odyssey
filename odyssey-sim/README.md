@@ -19,6 +19,18 @@ The path is relative to the repo root. Each run prints a summary and writes
 Options: `--time <s>` sets how long to run after START (30 for `@Autonomous`, 10 otherwise).
 `--set key=value` changes the robot (see below). `--out <dir>` changes where the files go.
 
+## Without a computer set up for the robot
+
+`.github/workflows/simulate.yml` runs the simulator on GitHub's machines on every push:
+1. It runs the tests, then simulates each OpMode in `TeamCode/.../odyssey/opmodes/`.
+2. Open the repo's **Actions** tab and click the run.
+3. The summary page shows each OpMode's results, and the full `report.html` / `trace.csv` files
+   are under **Artifacts** as `simulator-reports`.
+
+To try a new auto, add its file to that folder and push, or create it on github.com.
+
+Once the workflow is on `main`, **Run workflow** on the Actions tab can also simulate one file by path.
+
 ## What the file can use
 
 The file is compiled against:

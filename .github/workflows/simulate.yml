@@ -1,0 +1,91 @@
+name: Simulate OpModes
+
+# Runs odyssey-sim on GitHub's machines. Every push simulates each OpMode in
+# TeamCode/.../odyssey/opmodes; the results show on the run's summary page and the full
+# report.html / trace.csv files are attached to the run as "simulator-reports".
+# Once this file is on the default branch (main), "Run workflow" on the Actions tab can also
+# simulate one file you name.
+on:
+  push:
+  # Pull requests from forks: their pushes happen in the fork, so they need this to get a check here.
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      opmode:
+        description: OpMode file to simulate, path from the repo root (empty = every OpMode in TeamCode/.../odyssey/opmodes)
+        required: false
+        default: ""
+      time:
+        description: Seconds to run after START (empty = 30 for @Autonomous, 10 otherwise)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  simulate:
+    # Branches in this repo are already covered by their push; only run pull_request for forks.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      # gradlew is committed without its executable bit.
+      - name: Tests (odyssey-core and the simulator)
+        run: |
+          chmod +x gradlew
+          ./gradlew :odyssey-core:test :odyssey-sim:test
+
+      - name: Simulate
+        env:
+          OPMODE: ${{ inputs.opmode }}
+          SIM_TIME: ${{ inputs.time }}
+        run: |
+          if [ -n "$OPMODE" ]; then
+            files=("$OPMODE")
+          else
+            files=(TeamCode/src/main/java/org/firstinspires/ftc/teamcode/odyssey/opmodes/*.java)
+          fi
+          extra=""
+          if [ -n "$SIM_TIME" ]; then extra="--time $SIM_TIME"; fi
+          status=0
+          for f in "${files[@]}"; do
+            name=$(basename "$f" .java)
+            echo "::group::$name"
+            if ./gradlew -q :odyssey-sim:run --args="$f $extra" > "sim-$name.txt" 2>&1; then
+              result="ok"
+            else
+              result="FAILED"
+              status=1
+              echo "::error title=$name::the simulation failed; see the run summary"
+            fi
+            cat "sim-$name.txt"
+            echo "::endgroup::"
+            {
+              echo "### $name ($result)"
+              echo '```'
+              grep -v '^[[:space:]]*$' "sim-$name.txt" | tail -n 40
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          done
+          exit $status
+
+      - name: Attach reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulator-reports
+          path: |
+            odyssey-sim/out/*/report.html
+            odyssey-sim/out/*/trace.csv
+            odyssey-sim/build/reports/tests/
+            odyssey-core/build/reports/tests/
+          if-no-files-found: warn
