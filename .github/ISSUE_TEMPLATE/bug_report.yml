@@ -1,0 +1,52 @@
+name: Bug report
+description: Something doesn't build, crashes, or the robot does something it shouldn't.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! The more of this you fill in, the faster it can be fixed.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can we make it happen?
+      description: Which OpMode, which path, what you did.
+      placeholder: |
+        1. Run SamplePath
+        2. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did it happen?
+      options:
+        - On a real robot
+        - In the simulator (odyssey-sim)
+        - Building / unit tests
+        - Somewhere else
+    validations:
+      required: true
+  - type: input
+    id: branch
+    attributes:
+      label: Branch or commit
+      description: e.g. `test`, or a commit hash.
+  - type: textarea
+    id: output
+    attributes:
+      label: Error message, telemetry or simulator output
+      description: Paste it here, or attach the simulator's report.html / trace.csv.
+      render: text
+  - type: textarea
+    id: robot
+    attributes:
+      label: Robot details (if on a real robot)
+      description: Drive motors, wheels, odometry pods, battery voltage, and anything you changed in the constants.

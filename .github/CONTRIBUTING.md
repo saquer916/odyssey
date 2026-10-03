@@ -1,68 +1,100 @@
-# Contributing to the FTC SDK
+# Contributing to Odyssey
 
-The following is a set of guidelines for contributing the FIRST FTC SDK.  The FTC Technology Team welcomes suggestions for improvements to core software, ideas for new features, requests for built-in support of new sensors, and well written bug reports.
+Thanks for wanting to help! Odyssey is a young project run by a beginner, so help of every size
+is welcome, and so are beginners. If something here is unclear, that's a bug in this page; open an
+issue and say so.
 
-## How can I contribute?
+## Ways to help
 
-### Pull requests
+- **Report a problem.** Something doesn't build, the robot does something odd, the docs are wrong:
+  [open an issue](https://github.com/saquer916/odyssey/issues/new/choose) with the *Bug report* form.
+- **Suggest an idea.** Use the *Feature request* form. The [roadmap](../README.md#roadmap) lists what's
+  most needed.
+- **Test on a real robot.** This is the most valuable thing right now. Odyssey has only been tuned in
+  the simulator. Run `Drive Sign Check` and `SamplePath` on your robot and tell us what happened
+  (the bug report form has room for it).
+- **Improve the docs.** Fixing an unclear sentence is a perfectly good first pull request.
+- **Write code.** Pick an issue labelled `good first issue` or `help wanted`, or one from the roadmap.
 
-__STOP!__  If you are new to git, do not understand the mechanics of forks, branches, and pulls, if what you just read is confusing, __do not__ push this button.  Most likely it won't do what you think it will.
+## Before you write code
 
-![Pull Button](../doc/media/PullRequest.PNG)
+Comment on the issue you want to work on (or open one) so nobody else does the same thing, and so
+we can agree on the approach before you put time in. Small fixes like typos can skip this.
 
-If you are looking at this button then you've pushed some changes to your team's fork of ftctechnh/ftc_app.  Congratulations!  You are almost certainly finished.
+## How a contribution works
 
-The vast majority of pull requests seen on the ftctechnh/ftc_app repository are not intended to be merged into the official SDK.  Team software is just that, your team's.  It's specific to the tasks you are trying to accomplish, the testing you are doing, and goals your team has.  You don't want that pushed into the official SDK.
+If you've never made a pull request, this is the whole process.
 
-If what you've read so far makes little sense, there are some very good git learning resources online.  
-[Git Book](https://git-scm.com/book/en/v2)  
-[Interactive Git Tutorial](https://try.github.io)
+1. **Fork** the repo: the *Fork* button on GitHub makes your own copy under your account.
+2. **Clone** your fork and open it in Android Studio (the same setup used for FTC robot code).
+3. **Make a branch** off `test` for your change. Name it after what it does, e.g.
+   `fix/heading-wraparound` or `docs/tuning-guide`.
+   ```
+   git checkout test
+   git pull
+   git checkout -b fix/heading-wraparound
+   ```
+4. **Make your change**, and keep it to one thing. Two unrelated fixes are two pull requests.
+5. **Check it** (see [Testing your change](#testing-your-change)).
+6. **Push** the branch to your fork and open a **pull request into `test`**.
+   On the "Open a pull request" page, set **base: `test`**. GitHub suggests `main` by default, so
+   change it.
+7. **Review.** The simulator runs automatically on your pull request. A maintainer reads the change
+   and may ask questions or for changes. That's normal and not a rejection: push more commits to the
+   same branch and the pull request updates.
+8. **Merge.** Once it's approved, a maintainer merges it into `test`. After it's been tried on a
+   robot, `test` is merged into `main`.
 
-### Guidlines for experienced GIT users.
+### Branches
 
-If you are absolutely certain that you want to push the big green button above, read on.  Otherwise back _slowly away from keyboard_.
+| Branch | Purpose |
+|---|---|
+| `main` | Stable. Only updated from `test` after testing on a robot. Don't open pull requests into it. |
+| `test` | Where finished changes come together. **Open pull requests here.** |
+| your branch | One change, e.g. `fix/…`, `feat/…`, `docs/…`. Deleted after it's merged. |
 
-The real intent for advanced users is often to issue a pull request from the [branch](https://www.atlassian.com/git/tutorials/using-branches/git-branch) on a local fork back to master on either the same local fork or a child of the team fork and not on the parent ftctechnh/ftc_app.  See [Creating a Pull Request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
+## Testing your change
 
-If that is indeed the intent, then you can merge your [topic branch](https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows#Topic-Branches) into master locally by hand before pushing it up to github, or if you want a pull request for pulls between branches on the same repository because, say, you want team members to look at your software before merging into master, you can select the base fork from the dropdown on the "Open a pull request" page and select your team repo instead of ftctechnh's.
+From the repo root:
 
-Alternatively, if you have a team repository forked from ftctechnh/ftc_app, and then team members individually fork from your team repository, then pull requests from the individual team member's forks will have the main team repository automatically selected as the base fork for the pull. And you won't inadvertently request to pull your team software into ftctechnh's repository.
+```
+./gradlew :odyssey-core:test          # library unit tests
+./gradlew :odyssey-sim:test           # simulator tests (they run FirstTest and DriveSignCheck)
+./gradlew :odyssey-sim:run --args="TeamCode/src/main/java/org/firstinspires/ftc/teamcode/odyssey/opmodes/SamplePath.java"
+```
 
-The latter would be the "best" way to manage software among a large team. But as with all things git there are many options.
+The last command simulates an OpMode and writes `odyssey-sim/out/SamplePath/report.html`, which shows
+how closely the robot followed the path. If your change affects how the robot drives, say in your
+pull request how the simulator results changed, before vs. after.
 
-Pull requests that do not fall into the category above are evaluated by the FTC Technology Team on a case-by-case basis.  Please note however that the deployment model of the SDK does not support direct pulls into ftctechnh/ftc_app.  
+No computer set up for this? Push your branch, and the **Actions** tab on your fork runs the same
+checks.
 
-### Report bugs
+**If you test on a real robot:** start with the robot on blocks or with lots of room, keep a hand
+on the stop button, and run `Drive Sign Check` before any path.
 
-This section guides you through filing a bug report.  The better the report the more likely it is to be root caused and fixed.  Please refrain from feature requests or software enhancements when opening new issues.  See Suggesting Enhancements below.
+## Writing code
 
-#### Before submitting a bug report
+- **Match the code around it.** Same naming, same comment style, same level of detail.
+- **Units:** millimetres, seconds, radians. Robot frame: +X forward, +Y left, counter-clockwise
+  positive (the Pinpoint's convention).
+- **`odyssey-core` stays plain Java** with no FTC SDK imports, so it can be unit-tested on a computer.
+  Robot-specific code goes in `TeamCode/.../odyssey/`.
+- **Add a test** in `odyssey-core/src/test` for a library fix, ideally one that fails without the fix.
+- **Comments explain why**, not what: the unit, the assumption, the reason for a number.
+- **Don't change measured robot constants** (`kS`, `kV`, `kA`, `lX`, `lY`) unless you've measured them.
 
-- Check the [forums](http://ftcforum.firstinspires.org/forum.php) to see if someone else has run into the problem and whether there is an official solution that doesn't require a new SDK.
+## Commit messages
 
-- Perform a search of current [issues](https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues) to see if the problem has already been reported.  If so, add a comment to the existing issue instead of creating a new one.
+Short first line saying what the commit does, in lowercase like the existing history
+(`fix NaN drive signal at doubled bezier control points`). If it needs explaining, leave a blank line
+and say why underneath.
 
-#### How Do I Submit A (Good) Bug Report?
+## Code of conduct
 
-Bugs are tracked as GitHub issues. Create an issue on ftctechnh/ftc_app and provide the following information.
-Explain the problem and include additional details to help maintainers reproduce the problem:
+Be kind and assume good intent; everyone here is learning. See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-- Use a clear and descriptive title for the issue to identify the problem.
+## License
 
-- Describe the exact steps which reproduce the problem in as many details as possible.
-
-- Provide specific examples to demonstrate the steps.
-
-- Describe the behavior you observed after following the steps and point out what exactly is the problem with that behavior. Explain which behavior you expected to see instead and why. If applicable, include screenshots which show you following the described steps and clearly demonstrate the problem.
-
-- If you're reporting that the RobotController crashed, include the logfile with a stack trace of the crash.  [Example of good bug report with stack trace](https://github.com/ftctechnh/ftc_app/issues/224)
-
-- If the problem wasn't triggered by a specific action, describe what you were doing before the problem happened and share more information using the guidelines below.
-
-### Suggesting Enhancements
-
-FIRST volunteers are awesome.  You all have great ideas and we want to hear them.  
-
-Enhancements should be broadly applicable to a large majority of teams, should not force teams to change their workflow, and should provide real value to the mission of FIRST as it relates to engaging youth in engineering activities.
-
-The best way to get momentum behind new features is to post a description of your idea in the discussions section of this repository.  Build community support for it.  The FTC Technology Team monitors the discussions.  We'll hear you and if there's a large enough call for the feature it's very likely to get put on the list for a future release.
+Odyssey's own code is under the MIT License (see [LICENSE-ODYSSEY](../LICENSE-ODYSSEY)). By
+contributing, you agree that your contribution is licensed the same way.
